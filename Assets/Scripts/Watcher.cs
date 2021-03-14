@@ -3,44 +3,37 @@
 public class Watcher : MonoBehaviour
 {
     public GameObject enemy;
-    public float activeTimeInSeconds = 5;
+    public Vector3 movementDirection;
+    public Vector3 movementDistance;
     private bool _movingDown;
-    private float _activeTime;
     private Zombie _zombie;
+    private Vector3 _initialPosition;
 
     private void Start()
     {
         _zombie = enemy.GetComponent<Zombie>();
+        _initialPosition = transform.position;
     }
 
     private void Update()
     {
-        if (_movingDown == false)
+        if (_movingDown)
         {
-            transform.position -= new Vector3(0.1f, 0, 0.1f);
+            transform.position += movementDirection;
         }
         else
         {
-            transform.position += new Vector3(0.1f, 0, 0.1f);
+            transform.position -= movementDirection;
         }
 
-        if (transform.position.z > 10)
+        if (IsGreaterOrEqual(transform.position, (_initialPosition + movementDistance)))
         {
             _movingDown = false;
         }
-        else if (transform.position.z < -10)
+        else if (IsLesserOrEqual(transform.position, _initialPosition))
         {
             _movingDown = true;
         }
-
-        _activeTime -= Time.deltaTime;
-
-        if (_activeTime > 0)
-        {
-            return;
-        }
-
-        _zombie.enabled = false;
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -51,6 +44,15 @@ public class Watcher : MonoBehaviour
         }
 
         _zombie.enabled = true;
-        _activeTime = activeTimeInSeconds;
+    }
+
+    private static bool IsGreaterOrEqual(Vector3 local, Vector3 other)
+    {
+        return (local.x >= other.x && local.z >= other.z);
+    }
+
+    private static bool IsLesserOrEqual(Vector3 local, Vector3 other)
+    {
+        return (local.x <= other.x && local.z <= other.z);
     }
 }
