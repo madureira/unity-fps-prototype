@@ -1,18 +1,22 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEditor.UIElements;
+using UnityEngine;
 
 public class Watcher : MonoBehaviour
 {
     public GameObject enemy;
     public Vector3 movementDirection;
-    public Vector3 movementDistance;
+    public float distance = 20f;
     private bool _movingDown;
-    private Zombie _zombie;
+    private Zombie[] _zombies;
     private Vector3 _initialPosition;
+    private AudioSource _audioSource;
 
     private void Start()
     {
-        _zombie = enemy.GetComponent<Zombie>();
+        _zombies = enemy.GetComponentsInChildren<Zombie>();
         _initialPosition = transform.position;
+        _audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -26,7 +30,13 @@ public class Watcher : MonoBehaviour
             transform.position -= movementDirection;
         }
 
-        if (IsGreaterOrEqual(transform.position, (_initialPosition + movementDistance)))
+        var newPosition = new Vector3
+        {
+            x = movementDirection.x > 0 ? _initialPosition.x + distance : 0,
+            z = movementDirection.z > 0 ? _initialPosition.z + distance : 0
+        };
+
+        if (IsGreaterOrEqual(transform.position, newPosition))
         {
             _movingDown = false;
         }
@@ -43,7 +53,15 @@ public class Watcher : MonoBehaviour
             return;
         }
 
-        _zombie.enabled = true;
+        if (!_audioSource.isPlaying)
+        {
+            _audioSource.Play();
+        }
+
+        foreach (var zombie in _zombies)
+        {
+            zombie.enabled = true;
+        }
     }
 
     private static bool IsGreaterOrEqual(Vector3 local, Vector3 other)
