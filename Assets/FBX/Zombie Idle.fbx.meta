@@ -1,32 +1,12 @@
 fileFormatVersion: 2
-guid: bff04f037ade24959b6d20427e55c34f
+guid: 88b12f217089a47cdb1e66e4dbb1deaf
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
   - first:
       74: -203655887218126122
-    second: zombie_running
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Zombie_COL
-    second: {fileID: 2100000, guid: 213292eb58dec4198a04d3b2a7bc77ca, type: 2}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Zombie_diffuse
-    second: {fileID: 2800000, guid: 8987fd2c1ee254b598235ced0e2a2e18, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Zombie_normal
-    second: {fileID: 2800000, guid: 87b97e8a7951148b6bc5bde99941ec6e, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: Zombie_specular
-    second: {fileID: 2800000, guid: e20ec1d18a0fc4eb99b3b0b14c0de73d, type: 3}
+    second: zombie_idle
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -55,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: zombie_running
+      name: zombie_idle
       takeName: mixamo.com
       internalID: 0
       firstFrame: 0
-      lastFrame: 24
+      lastFrame: 120
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

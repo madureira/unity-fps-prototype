@@ -1,18 +1,16 @@
 ﻿using UnityEngine;
 
-public class Looker : MonoBehaviour
+public class Watcher : MonoBehaviour
 {
     public GameObject enemy;
     public float activeTimeInSeconds = 5;
     private bool _movingDown;
     private float _activeTime;
     private Zombie _zombie;
-    private SphereCollider _sphereCollider;
 
     private void Start()
     {
         _zombie = enemy.GetComponent<Zombie>();
-        _sphereCollider = GetComponent<SphereCollider>();
     }
 
     private void Update()
@@ -43,7 +41,6 @@ public class Looker : MonoBehaviour
         }
 
         _zombie.enabled = false;
-        //_sphereCollider.enabled = true;
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -55,6 +52,5 @@ public class Looker : MonoBehaviour
 
         _zombie.enabled = true;
         _activeTime = activeTimeInSeconds;
-        //_sphereCollider.enabled = false;
     }
 }
