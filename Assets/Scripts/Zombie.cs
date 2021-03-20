@@ -1,15 +1,22 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class Zombie : MonoBehaviour
 {
     public GameObject player;
     public float activeTimeInSeconds = 10;
+    public GameObject uiPanel;
     private NavMeshAgent _navMesh;
     private Animator _animator;
     private bool _isRunning;
     private float _activeTime;
+    
+    public void Reset()
+    {
+        _activeTime = activeTimeInSeconds;
+    }
 
     private void Start()
     {
@@ -19,9 +26,9 @@ public class Zombie : MonoBehaviour
 
     private void Update()
     {
-        if (_activeTime < 0)
+        if (_activeTime <= 0)
         {
-            this.enabled = false;
+            Stop();
             return;
         }
 
@@ -36,12 +43,7 @@ public class Zombie : MonoBehaviour
         _animator.Play("zombie_running");
     }
 
-    private void OnEnable()
-    {
-        _activeTime = activeTimeInSeconds;
-    }
-
-    private void OnDisable()
+    private void Stop()
     {
         _activeTime = 0;
         _isRunning = false;
@@ -51,9 +53,19 @@ public class Zombie : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.tag == "Player")
+        if (collider.tag != "Player")
         {
-            Debug.LogWarning("Killed by Zombie!!!");
+            return;
         }
+
+        uiPanel.SetActive(true);
+        StartCoroutine(RestartScene());
+    }
+
+    private static IEnumerator RestartScene()
+    {
+        yield return new WaitForSeconds(3f);
+        var currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
     }
 }

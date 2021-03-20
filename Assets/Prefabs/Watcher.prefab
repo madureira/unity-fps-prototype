@@ -108,8 +108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
-  movementDirection: {x: 0.1, y: 0, z: 0}
+  movementDirection: {x: 0.1, y: 0, z: 0.1}
   distance: 20
+  _timer: {fileID: 7844060503691518998, guid: dcb681a02d32d4fdabe6636ac91663a4, type: 3}
 --- !u!82 &1522032023721182956
 AudioSource:
   m_ObjectHideFlags: 0

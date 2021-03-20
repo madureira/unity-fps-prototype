@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEditor.UIElements;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Watcher : MonoBehaviour
 {
@@ -8,6 +7,7 @@ public class Watcher : MonoBehaviour
     public Vector3 movementDirection;
     public float distance = 20f;
     private bool _movingDown;
+    public Text timer;
     private Zombie[] _zombies;
     private Vector3 _initialPosition;
     private AudioSource _audioSource;
@@ -52,16 +52,16 @@ public class Watcher : MonoBehaviour
         {
             return;
         }
-
-        if (!_audioSource.isPlaying)
-        {
-            _audioSource.Play();
-        }
+        
+        _audioSource.Play();
 
         foreach (var zombie in _zombies)
         {
-            zombie.enabled = true;
+            zombie.GetComponent<Zombie>().Reset();
         }
+
+        timer.enabled = true;
+        timer.GetComponent<Timer>().Reset();
     }
 
     private static bool IsGreaterOrEqual(Vector3 local, Vector3 other)
